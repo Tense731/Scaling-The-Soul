@@ -630,23 +630,7 @@ h4 {
     height: 18px
 }
 
-@media(max-width:768px) {
-    .nav-links {
-        display: none
-    }
 
-    .nav-hamburger {
-        display: flex
-    }
-
-    .mobile-nav {
-        display: flex
-    }
-
-    .nav-auth-btns .btn span {
-        display: none
-    }
-}
 
 /* Pages */
 .page {
@@ -2896,72 +2880,845 @@ h4 {
 }
 
 /* Responsive */
-@media(max-width:640px) {
+/* ═══════════════════════════════════════
+   RESPONSIVE — Tablet (768px)
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+    :root {
+        --nav-height: 56px;
+    }
+
+    .nav-links {
+        display: none
+    }
+
+    .nav-hamburger {
+        display: flex
+    }
+
+    .mobile-nav {
+        display: flex
+    }
+
+    .nav-auth-btns .btn span {
+        display: none
+    }
+
+    .nav-auth-btns .btn {
+        padding: 8px 12px
+    }
+
+    .nav-title {
+        font-size: 15px
+    }
+
+    .main-nav {
+        padding: 0 16px
+    }
+
     .hero {
-        padding: 24px 16px
+        padding: 32px 16px;
+        min-height: calc(100vh - var(--nav-height))
+    }
+
+    .hero-content {
+        max-width: 100%
+    }
+
+    .hero-badge {
+        font-size: 10px;
+        padding: 6px 14px;
+        letter-spacing: 1px
     }
 
     .hero-title-line {
-        font-size: 28px
+        font-size: clamp(26px, 8vw, 42px)
     }
 
-    .section {
-        padding: 48px 16px
+    .hero-desc {
+        font-size: 14px;
+        margin-bottom: 20px
+    }
+
+    .ml-label {
+        font-size: 15px;
+        padding: 6px 16px;
+        min-width: 200px
+    }
+
+    .hero-multilingual {
+        margin-bottom: 24px
     }
 
     .hero-actions {
-        flex-direction: column
+        flex-direction: column;
+        gap: 10px
     }
 
     .hero-actions .btn {
         width: 100%
     }
 
-    .legacy-stats-bar {
-        flex-direction: column
-    }
-
-    .ls-stat {
-        max-width: 100%
-    }
-
     .hero-stats {
+        gap: 10px;
         flex-wrap: wrap
     }
 
     .stat-card {
         flex: 1;
         min-width: 80px;
-        padding: 12px
+        padding: 12px 16px
     }
 
     .stat-number {
         font-size: 22px
     }
 
+    .stat-label {
+        font-size: 10px
+    }
+
+    .section {
+        padding: 48px 16px
+    }
+
+    .section-title {
+        font-size: 22px
+    }
+
+    .section-subtitle {
+        font-size: 13px;
+        margin-bottom: 32px
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 16px
+    }
+
+    .step-card {
+        padding: 24px 20px
+    }
+
+    .hooks-grid {
+        grid-template-columns: 1fr;
+        gap: 16px
+    }
+
+    .hook-card {
+        padding: 24px
+    }
+
+    /* Map */
+    .map-container {
+        padding: 16px
+    }
+
+    .map-header h1 {
+        font-size: 22px
+    }
+
+    .map-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px
+    }
+
+    .map-legend {
+        justify-content: center
+    }
+
+    .map-filter-group {
+        justify-content: center
+    }
+
+    .story-feed {
+        max-height: 300px
+    }
+
+    .feed-card {
+        padding: 12px
+    }
+
+    .feed-thumb {
+        width: 48px;
+        height: 48px
+    }
+
+    /* Capture */
+    .capture-container {
+        padding: 16px
+    }
+
+    .capture-title {
+        font-size: 22px
+    }
+
+    .capture-buttons {
+        flex-direction: column
+    }
+
+    .capture-buttons .btn {
+        width: 100%
+    }
+
+    .capture-nav-buttons {
+        flex-direction: column
+    }
+
+    .capture-nav-buttons .btn {
+        width: 100%
+    }
+
+    .media-capture-zone {
+        aspect-ratio: 3/2
+    }
+
+    .capture-steps-indicator {
+        transform: scale(0.9)
+    }
+
+    /* Legacy */
+    .legacy-container {
+        padding: 16px
+    }
+
+    .legacy-stats-bar {
+        flex-direction: column;
+        gap: 10px
+    }
+
+    .ls-stat {
+        max-width: 100%;
+        padding: 16px
+    }
+
+    .ls-number {
+        font-size: 26px
+    }
+
+    .vendor-grid {
+        grid-template-columns: 1fr;
+        gap: 14px
+    }
+
+    .vendor-card {
+        padding: 20px
+    }
+
+    /* Soccer */
+    .soccer-container {
+        padding: 16px
+    }
+
+    .pitch-list {
+        grid-template-columns: 1fr;
+        gap: 12px
+    }
+
+    .shs-ring {
+        width: 100px;
+        height: 100px
+    }
+
+    .shs-number {
+        font-size: 28px
+    }
+
+    /* My Stories */
+    .mystories-container {
+        padding: 16px
+    }
+
+    .mystories-list {
+        grid-template-columns: 1fr;
+        gap: 12px
+    }
+
+    /* Admin */
+    .admin-container {
+        padding: 16px
+    }
+
+    .admin-tabs {
+        flex-wrap: wrap;
+        gap: 4px
+    }
+
+    .admin-tab {
+        flex: 1;
+        min-width: 0;
+        padding: 8px 12px;
+        font-size: 12px;
+        justify-content: center
+    }
+
     .admin-table {
-        font-size: 12px
+        font-size: 12px;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch
     }
 
     .admin-table th,
     .admin-table td {
-        padding: 8px
-    }
-}
-
-@media(max-width:480px) {
-    .auth-gate-btns {
-        flex-direction: column
+        padding: 8px 10px;
+        white-space: nowrap
     }
 
+    .admin-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px
+    }
+
+    .admin-stat-card {
+        padding: 16px
+    }
+
+    .admin-stat-val {
+        font-size: 28px
+    }
+
+    /* Modals */
     .modal-content {
+        margin: 8px;
         padding: 24px;
-        margin: 12px
+        max-height: 90vh;
+        border-radius: var(--radius-lg)
     }
 
+    .modal-title {
+        font-size: 18px
+    }
+
+    /* Page headers */
+    .page-header {
+        padding: 24px 16px 16px
+    }
+
+    .page-header h1 {
+        font-size: 22px
+    }
+
+    /* Profile dropdown */
     .profile-dropdown {
         right: 12px;
         left: 12px;
         width: auto
+    }
+
+    /* Footer */
+    .main-footer {
+        padding: 32px 16px
+    }
+
+    .footer-brand {
+        font-size: 15px
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 12px 20px;
+        font-size: 14px
+    }
+
+    .btn-sm {
+        padding: 7px 14px;
+        font-size: 11px
+    }
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — Small Phone (480px)
+   ═══════════════════════════════════════ */
+@media (max-width: 480px) {
+    :root {
+        --nav-height: 52px;
+    }
+
+    .nav-title {
+        font-size: 13px
+    }
+
+    .nav-brand {
+        gap: 6px
+    }
+
+    .nav-brand .custom-icon {
+        width: 20px;
+        height: 20px
+    }
+
+    .nav-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 12px
+    }
+
+    .nav-username {
+        display: none
+    }
+
+    .nav-chevron {
+        display: none
+    }
+
+    .hero {
+        padding: 24px 12px
+    }
+
+    .hero-title-line {
+        font-size: 26px;
+        letter-spacing: -0.5px
+    }
+
+    .hero-desc {
+        font-size: 13px;
+        margin-bottom: 16px
+    }
+
+    .hero-badge {
+        font-size: 9px;
+        padding: 5px 12px;
+        margin-bottom: 16px
+    }
+
+    .ml-label {
+        font-size: 14px;
+        min-width: auto;
+        padding: 5px 14px
+    }
+
+    .hero-stats {
+        gap: 8px
+    }
+
+    .stat-card {
+        min-width: 70px;
+        padding: 10px 12px
+    }
+
+    .stat-number {
+        font-size: 20px
+    }
+
+    .stat-label {
+        font-size: 9px
+    }
+
+    .section {
+        padding: 36px 12px
+    }
+
+    .section-title {
+        font-size: 20px
+    }
+
+    .section-subtitle {
+        font-size: 12px;
+        margin-bottom: 24px
+    }
+
+    .step-card {
+        padding: 20px 16px
+    }
+
+    .step-card h3 {
+        font-size: 16px
+    }
+
+    .step-card p {
+        font-size: 12px
+    }
+
+    .step-number {
+        font-size: 36px
+    }
+
+    .step-icon [data-lucide] {
+        width: 32px;
+        height: 32px
+    }
+
+    .hook-card {
+        padding: 20px
+    }
+
+    .hook-card h3 {
+        font-size: 16px
+    }
+
+    .hook-icon [data-lucide],
+    .hook-icon .custom-icon {
+        width: 28px;
+        height: 28px
+    }
+
+    /* Capture */
+    .capture-title {
+        font-size: 20px
+    }
+
+    .capture-desc {
+        font-size: 12px
+    }
+
+    .csi-step {
+        font-size: 11px
+    }
+
+    .csi-step span {
+        width: 24px;
+        height: 24px;
+        font-size: 10px
+    }
+
+    .csi-line {
+        width: 24px
+    }
+
+    .capture-steps-indicator {
+        transform: scale(1)
+    }
+
+    .media-capture-zone {
+        aspect-ratio: 1/1;
+        border-radius: var(--radius-md)
+    }
+
+    .pin-success-title {
+        font-size: 20px
+    }
+
+    .pin-success-desc {
+        font-size: 12px
+    }
+
+    .pin-summary-item {
+        font-size: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px
+    }
+
+    /* Map */
+    .map-container {
+        padding: 12px
+    }
+
+    .map-header h1 {
+        font-size: 20px
+    }
+
+    .feed-name {
+        font-size: 13px
+    }
+
+    .feed-caption {
+        font-size: 12px
+    }
+
+    .feed-thumb {
+        width: 42px;
+        height: 42px
+    }
+
+    .feed-card {
+        gap: 10px;
+        padding: 10px
+    }
+
+    /* Legacy */
+    .ls-number {
+        font-size: 24px
+    }
+
+    .ls-label {
+        font-size: 10px
+    }
+
+    .vendor-name {
+        font-size: 15px
+    }
+
+    .vendor-desc {
+        font-size: 12px
+    }
+
+    .vendor-icon {
+        width: 38px;
+        height: 38px
+    }
+
+    /* Soccer */
+    .pitch-card {
+        padding: 16px
+    }
+
+    .pitch-name {
+        font-size: 14px
+    }
+
+    .pitch-desc {
+        font-size: 12px
+    }
+
+    /* My Stories */
+    .my-story-card {
+        padding: 16px
+    }
+
+    .my-story-caption {
+        font-size: 13px
+    }
+
+    /* Admin - card-style on small screens */
+    .admin-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px
+    }
+
+    .admin-stat-card {
+        padding: 14px
+    }
+
+    .admin-stat-val {
+        font-size: 24px
+    }
+
+    .admin-stat-label {
+        font-size: 10px
+    }
+
+    /* Auth modals */
+    .auth-modal-content {
+        max-width: 100%
+    }
+
+    .auth-tabs {
+        gap: 2px
+    }
+
+    .auth-tab {
+        font-size: 12px;
+        padding: 8px
+    }
+
+    .modal-content {
+        padding: 20px;
+        margin: 8px;
+        border-radius: var(--radius-md)
+    }
+
+    .auth-gate {
+        padding: 32px 16px
+    }
+
+    .auth-gate h3 {
+        font-size: 18px
+    }
+
+    .auth-gate-btns {
+        flex-direction: column
+    }
+
+    .auth-gate-btns .btn {
+        width: 100%
+    }
+
+    /* Form */
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: 12px 14px;
+        font-size: 14px
+    }
+
+    .form-label {
+        font-size: 11px
+    }
+
+    /* Confirm */
+    .confirm-content {
+        max-width: 100%
+    }
+
+    .confirm-content h3 {
+        font-size: 18px
+    }
+
+    .confirm-btns {
+        flex-direction: column
+    }
+
+    .confirm-btns .btn {
+        width: 100%
+    }
+
+    /* Footer */
+    .main-footer {
+        padding: 24px 12px
+    }
+
+    .footer-brand {
+        font-size: 14px
+    }
+
+    .footer-tagline {
+        font-size: 11px
+    }
+
+    .footer-copy {
+        font-size: 10px
+    }
+
+    /* Toast */
+    .toast-container {
+        left: 12px;
+        right: 12px;
+        bottom: 16px
+    }
+
+    .toast {
+        min-width: auto;
+        width: 100%
+    }
+
+    .toast-message {
+        font-size: 13px
+    }
+
+    /* Buttons touch-friendly */
+    .btn {
+        padding: 12px 18px;
+        font-size: 13px;
+        -webkit-tap-highlight-color: transparent
+    }
+
+    .btn-icon {
+        width: 36px;
+        height: 36px
+    }
+
+    .filter-btn {
+        padding: 8px 12px
+    }
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — Tiny Phone (360px)
+   ═══════════════════════════════════════ */
+@media (max-width: 360px) {
+    .hero-title-line {
+        font-size: 22px
+    }
+
+    .hero-desc {
+        font-size: 12px
+    }
+
+    .hero-badge {
+        font-size: 8px;
+        padding: 4px 10px
+    }
+
+    .ml-label {
+        font-size: 12px
+    }
+
+    .stat-card {
+        min-width: 60px;
+        padding: 8px 10px
+    }
+
+    .stat-number {
+        font-size: 18px
+    }
+
+    .capture-title {
+        font-size: 18px
+    }
+
+    .page-header h1 {
+        font-size: 18px
+    }
+
+    .nav-title {
+        font-size: 12px
+    }
+
+    .admin-stat-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px
+    }
+
+    .admin-stat-val {
+        font-size: 20px
+    }
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — Landscape Mobile
+   ═══════════════════════════════════════ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 20px 16px
+    }
+
+    .hero-badge {
+        margin-bottom: 12px
+    }
+
+    .hero-title-line {
+        font-size: 24px
+    }
+
+    .hero-multilingual {
+        margin-bottom: 16px
+    }
+
+    .hero-actions {
+        flex-direction: row
+    }
+
+    .hero-stats {
+        margin-top: 16px
+    }
+
+    .splash-logo-ring {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 12px
+    }
+
+    .splash-title {
+        font-size: 20px
+    }
+}
+
+/* ═══════════════════════════════════════
+   UTILITY — Safe Area (iPhone notch)
+   ═══════════════════════════════════════ */
+@supports (padding: env(safe-area-inset-top)) {
+    .main-nav {
+        padding-top: env(safe-area-inset-top);
+        height: calc(var(--nav-height) + env(safe-area-inset-top))
+    }
+
+    .page {
+        padding-top: calc(var(--nav-height) + env(safe-area-inset-top))
+    }
+
+    .mobile-nav {
+        top: calc(var(--nav-height) + env(safe-area-inset-top))
+    }
+
+    .main-footer {
+        padding-bottom: calc(24px + env(safe-area-inset-bottom))
+    }
+
+    .toast-container {
+        bottom: calc(16px + env(safe-area-inset-bottom))
     }
 }
