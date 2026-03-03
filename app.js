@@ -617,14 +617,19 @@ async function deleteUser(uid) {
     try {
         // Delete user's stories
         const storiesSnap = await db.collection('stories').where('userId', '==', uid).get();
+        const storyCount = storiesSnap.size;
         const batch = db.batch();
         storiesSnap.forEach(doc => batch.delete(doc.ref));
+        // Delete user profile from Firestore
         batch.delete(db.collection('users').doc(uid));
         await batch.commit();
         await loadStories();
         await renderAdmin();
-        showToast('User deleted.', 'info');
-    } catch (e) { console.error('Delete user error:', e); showToast('Failed to delete user.', 'error'); }
+        showToast(`User removed. ${storyCount} ${storyCount === 1 ? 'story' : 'stories'} deleted.`, 'info');
+    } catch (e) {
+        console.error('Delete user error:', e);
+        showToast('Failed to delete user. Check Firestore rules.', 'error');
+    }
 }
 
 /* ═══════════════════════════════════════════════
