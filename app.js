@@ -42,7 +42,8 @@ const PITCHES = [
 /* ─── State ─── */
 let stories = [], currentUser = null, userProfile = null, currentPage = 'home', capturedMedia = null,
     capturedDataUrl = null, captureStep = 1, mobileNavOpen = false, currentFilter = 'all',
-    lastPinnedStory = null, confirmCallback = null, profileMenuOpen = false, allUsers = [];
+    lastPinnedStory = null, confirmCallback = null, profileMenuOpen = false, allUsers = [],
+    isSigningUp = false;
 
 /* ═══════════════════════════════════════════════
    INITIALIZATION
@@ -64,12 +65,15 @@ function initApp() {
     // Listen for auth state changes
     auth.onAuthStateChanged(async (user) => {
         currentUser = user;
-        if (user) {
+        if (user && !isSigningUp) {
+            // Only load profile if NOT in the middle of signup
+            // (signup sets userProfile manually after writing Firestore)
             await loadUserProfile();
-        } else {
+            updateAuthUI();
+        } else if (!user) {
             userProfile = null;
+            updateAuthUI();
         }
-        updateAuthUI();
         await loadStories();
         refreshIcons();
     });
@@ -147,6 +151,7 @@ async function handleSignup() {
 
     const btn = gi('btn-signup');
     btn.disabled = true; btn.innerHTML = '<i data-lucide="loader"></i> Creating...';
+    isSigningUp = true;
 
     try {
         const cred = await auth.createUserWithEmailAndPassword(email, pw);
@@ -167,6 +172,7 @@ async function handleSignup() {
         userProfile = { id: cred.user.uid, name, email, role, neighborhood: hood };
         updateAuthUI();
 
+        isSigningUp = false;
         closeAuthModal();
         showToast(`Welcome, ${name}! ${role === 'admin' ? '(Admin)' : ''}`, 'success');
         clearAuthForms();
@@ -178,6 +184,7 @@ async function handleSignup() {
         else if (e.code === 'auth/invalid-email') msg = 'Invalid email address.';
         showToast(msg, 'error');
     }
+    isSigningUp = false;
 
     btn.disabled = false; btn.innerHTML = '<i data-lucide="user-plus"></i> Create Account';
     refreshIcons();
