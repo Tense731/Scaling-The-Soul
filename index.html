@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+        content="FIFA Fan Festival Toronto — Scaling the Soul: Pin your Glocal story on the interactive Impact Map.">
+    <meta name="theme-color" content="#0a0e27">
+    <title>Scaling the Soul | FIFA Fan Festival Toronto 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- SVG Sprite -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+        <symbol id="icon-soccer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            <path d="M2 12h20" />
+        </symbol>
+    </svg>
+
+    <!-- SPLASH -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo-ring">
+                <svg viewBox="0 0 120 120" class="splash-ring-svg">
+                    <circle cx="60" cy="60" r="54" fill="none" stroke="url(#splashGrad)" stroke-width="3"
+                        stroke-dasharray="12 8" class="ring-rotate" />
+                    <defs>
+                        <linearGradient id="splashGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00e5ff" />
+                            <stop offset="50%" stop-color="#d500f9" />
+                            <stop offset="100%" stop-color="#ffab00" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="splash-icon"><svg class="custom-icon" width="40" height="40">
+                        <use href="#icon-soccer" />
+                    </svg></span>
+            </div>
+            <h1 class="splash-title">SCALING THE SOUL</h1>
+            <p class="splash-subtitle">FIFA Fan Festival Toronto 2026</p>
+            <div class="splash-loader">
+                <div class="splash-loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app" class="app hidden">
+        <!-- NAV -->
+        <nav id="main-nav" class="main-nav">
+            <div class="nav-brand" onclick="navigateTo('home')">
+                <svg class="custom-icon nav-logo-icon" width="24" height="24">
+                    <use href="#icon-soccer" />
+                </svg>
+                <span class="nav-title">Scaling the Soul</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-link active" data-page="home" onclick="navigateTo('home')"><i data-lucide="home"></i>
+                    Home</button>
+                <button class="nav-link" data-page="capture" onclick="navigateTo('capture')"><i
+                        data-lucide="camera"></i> Pin Story</button>
+                <button class="nav-link" data-page="map" onclick="navigateTo('map')"><i data-lucide="map"></i> Impact
+                    Map</button>
+                <button class="nav-link" data-page="legacy" onclick="navigateTo('legacy')"><i data-lucide="store"></i>
+                    Legacy</button>
+                <button class="nav-link" data-page="soccer" onclick="navigateTo('soccer')"><i data-lucide="trophy"></i>
+                    Soccer</button>
+                <button class="nav-link" data-page="admin" id="nav-admin" onclick="navigateTo('admin')"
+                    style="display:none"><i data-lucide="shield"></i> Admin</button>
+            </div>
+            <div class="nav-user-area">
+                <div id="nav-auth-btns" class="nav-auth-btns">
+                    <button class="btn btn-sm btn-outline" onclick="openAuthModal('login')"><i data-lucide="log-in"></i>
+                        Login</button>
+                    <button class="btn btn-sm btn-primary" onclick="openAuthModal('signup')"><i
+                            data-lucide="user-plus"></i> Sign Up</button>
+                </div>
+                <div id="nav-user-profile" class="nav-user-profile hidden" onclick="toggleProfileMenu()">
+                    <div class="nav-avatar" id="nav-avatar">A</div>
+                    <span class="nav-username" id="nav-username">User</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                </div>
+            </div>
+            <button id="nav-hamburger" class="nav-hamburger"
+                onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+        </nav>
+
+        <!-- Profile Dropdown -->
+        <div id="profile-dropdown" class="profile-dropdown hidden">
+            <div class="pd-header">
+                <div class="pd-avatar" id="pd-avatar">A</div>
+                <div class="pd-info">
+                    <div class="pd-name" id="pd-name">User</div>
+                    <div class="pd-email" id="pd-email">user@email.com</div>
+                    <span class="pd-role" id="pd-role">User</span>
+                </div>
+            </div>
+            <div class="pd-divider"></div>
+            <button class="pd-item" onclick="openProfileModal()"><i data-lucide="user"></i> Edit Profile</button>
+            <button class="pd-item" onclick="navigateTo('mystories'); closeProfileMenu()"><i
+                    data-lucide="book-open"></i> My Stories</button>
+            <button class="pd-item" onclick="openChangePasswordModal()"><i data-lucide="key"></i> Change
+                Password</button>
+            <div class="pd-divider"></div>
+            <button class="pd-item pd-logout" onclick="handleLogout()"><i data-lucide="log-out"></i> Logout</button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div id="mobile-nav" class="mobile-nav">
+            <button class="mobile-nav-link active" data-page="home" onclick="navigateTo('home')"><i
+                    data-lucide="home"></i> Home</button>
+            <button class="mobile-nav-link" data-page="capture" onclick="navigateTo('capture')"><i
+                    data-lucide="camera"></i> Pin Story</button>
+            <button class="mobile-nav-link" data-page="map" onclick="navigateTo('map')"><i data-lucide="map"></i> Impact
+                Map</button>
+            <button class="mobile-nav-link" data-page="legacy" onclick="navigateTo('legacy')"><i
+                    data-lucide="store"></i> Legacy</button>
+            <button class="mobile-nav-link" data-page="soccer" onclick="navigateTo('soccer')"><i
+                    data-lucide="trophy"></i> Soccer</button>
+            <button class="mobile-nav-link" data-page="admin" id="mobile-nav-admin" onclick="navigateTo('admin')"
+                style="display:none"><i data-lucide="shield"></i> Admin</button>
+            <div class="pd-divider"></div>
+            <div id="mobile-auth-area"></div>
+        </div>
+
+        <!-- PAGE: HOME -->
+        <section id="page-home" class="page active">
+            <div class="hero">
+                <div class="hero-bg-overlay"></div>
+                <div class="hero-particles" id="hero-particles"></div>
+                <div class="hero-content">
+                    <div class="hero-badge"><i data-lucide="award" class="badge-icon"></i> FIFA Fan Festival Toronto
+                        2026</div>
+                    <h1 class="hero-title">
+                        <span class="hero-title-line">See the Game.</span>
+                        <span class="hero-title-line accent">Share the Soul.</span>
+                    </h1>
+                    <p class="hero-desc">Fort York &amp; The Bentway — Scan. Capture. Pin your Glocal story.</p>
+                    <div class="hero-multilingual"><span class="ml-label"><i data-lucide="globe" class="ml-icon"></i>
+                            <span id="ml-text">Share Your Legacy</span></span></div>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-glow" onclick="navigateTo('capture')"><i
+                                data-lucide="camera"></i> TAP HERE TO PIN YOUR STORY</button>
+                        <button class="btn btn-secondary" onclick="navigateTo('map')"><i data-lucide="map"></i> View
+                            Impact Map</button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-card"><span class="stat-number" id="stat-stories">0</span><span
+                                class="stat-label"><i data-lucide="map-pin" class="stat-icon"></i> Stories</span></div>
+                        <div class="stat-card"><span class="stat-number" id="stat-neighborhoods">0</span><span
+                                class="stat-label"><i data-lucide="map-pin" class="stat-icon"></i> Hoods</span></div>
+                        <div class="stat-card"><span class="stat-number" id="stat-languages">15+</span><span
+                                class="stat-label"><i data-lucide="globe" class="stat-icon"></i> Languages</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section section-how">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Three simple steps to pin your Glocal moment</p>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">01</div>
+                        <div class="step-icon"><i data-lucide="smartphone"></i></div>
+                        <h3>Scan</h3>
+                        <p>Scan the QR code on any poster. No app download needed.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">02</div>
+                        <div class="step-icon"><i data-lucide="camera"></i></div>
+                        <h3>Capture</h3>
+                        <p>Take a photo or 15-second video of your Glocal moment.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">03</div>
+                        <div class="step-icon"><i data-lucide="map-pin"></i></div>
+                        <h3>Pin</h3>
+                        <p>Select your neighborhood and pin it to the Impact Map.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section section-legacy-hooks">
+                <h2 class="section-title">Discover the Legacy</h2>
+                <div class="hooks-grid">
+                    <div class="hook-card hook-procurement" onclick="navigateTo('legacy')">
+                        <div class="hook-icon"><i data-lucide="store"></i></div>
+                        <h3>Social Procurement</h3>
+                        <p>Local businesses building a lasting legacy</p><span class="hook-cta">Explore <i
+                                data-lucide="arrow-right" class="cta-arrow"></i></span>
+                    </div>
+                    <div class="hook-card hook-soccer" onclick="navigateTo('soccer')">
+                        <div class="hook-icon"><svg class="custom-icon" width="36" height="36">
+                                <use href="#icon-soccer" />
+                            </svg></div>
+                        <h3>Soccer for All</h3>
+                        <p>Free mini-pitches for every community</p><span class="hook-cta">Find a Pitch <i
+                                data-lucide="arrow-right" class="cta-arrow"></i></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: CAPTURE -->
+        <section id="page-capture" class="page">
+            <div class="capture-container">
+                <div class="capture-header">
+                    <h1 class="capture-title"><i data-lucide="map-pin" class="title-icon"></i> Pin Your Story</h1>
+                    <p class="capture-desc">Capture your Glocal moment and add it to the Impact Map</p>
+                </div>
+                <div id="capture-auth-gate" class="auth-gate hidden">
+                    <div class="auth-gate-icon"><i data-lucide="lock"></i></div>
+                    <h3>Sign in to Pin Your Story</h3>
+                    <p>Create an account or log in to start sharing</p>
+                    <div class="auth-gate-btns">
+                        <button class="btn btn-primary" onclick="openAuthModal('signup')"><i
+                                data-lucide="user-plus"></i> Sign Up</button>
+                        <button class="btn btn-secondary" onclick="openAuthModal('login')"><i data-lucide="log-in"></i>
+                            Login</button>
+                    </div>
+                </div>
+                <div id="capture-form-area">
+                    <div class="capture-steps-indicator">
+                        <div class="csi-step active" data-cstep="1"><span>1</span> Capture</div>
+                        <div class="csi-line"></div>
+                        <div class="csi-step" data-cstep="2"><span>2</span> Details</div>
+                        <div class="csi-line"></div>
+                        <div class="csi-step" data-cstep="3"><span>3</span> Pin!</div>
+                    </div>
+                    <div id="capture-step-1" class="capture-step active">
+                        <div class="media-capture-zone" id="media-capture-zone">
+                            <div class="capture-placeholder" id="capture-placeholder">
+                                <div class="capture-icon-large"><i data-lucide="image-plus"></i></div>
+                                <p>Tap to capture your moment</p><span class="capture-hint">Photo or 15-second
+                                    video</span>
+                            </div>
+                            <img id="capture-preview-img" class="capture-preview hidden" alt="Preview">
+                            <video id="capture-preview-video" class="capture-preview hidden" autoplay muted loop
+                                playsinline></video>
+                            <button id="btn-remove-media" class="btn-remove-media hidden"
+                                onclick="removeMedia(event)"><i data-lucide="x"></i></button>
+                            <input type="file" id="media-input" accept="image/*,video/*" capture="environment" hidden>
+                        </div>
+                        <div class="capture-buttons">
+                            <button class="btn btn-capture" onclick="openMediaCapture('image')"><i
+                                    data-lucide="camera"></i> Photo</button>
+                            <button class="btn btn-capture" onclick="openMediaCapture('video')"><i
+                                    data-lucide="video"></i> Video</button>
+                        </div>
+                        <button class="btn btn-primary btn-full disabled" id="btn-next-step2"
+                            onclick="goToCaptureStep(2)" disabled>Next <i data-lucide="arrow-right"></i></button>
+                    </div>
+                    <div id="capture-step-2" class="capture-step">
+                        <div class="form-group"><label class="form-label"><i data-lucide="map-pin"
+                                    class="label-icon"></i> Neighborhood</label>
+                            <select id="neighborhood-select" class="form-select" required>
+                                <option value="">-- Select --</option>
+                                <optgroup label="Downtown">
+                                    <option value="fort-york">Fort York</option>
+                                    <option value="harbourfront">Harbourfront</option>
+                                    <option value="king-west">King West</option>
+                                    <option value="entertainment">Entertainment District</option>
+                                    <option value="financial">Financial District</option>
+                                    <option value="st-lawrence">St. Lawrence Market</option>
+                                    <option value="distillery">Distillery</option>
+                                    <option value="church-wellesley">Church-Wellesley</option>
+                                </optgroup>
+                                <optgroup label="Midtown">
+                                    <option value="yorkville">Yorkville</option>
+                                    <option value="annex">The Annex</option>
+                                    <option value="midtown">Midtown</option>
+                                    <option value="forest-hill">Forest Hill</option>
+                                    <option value="north-york">North York</option>
+                                </optgroup>
+                                <optgroup label="East">
+                                    <option value="danforth">Danforth</option>
+                                    <option value="leslieville">Leslieville</option>
+                                    <option value="beaches">The Beaches</option>
+                                    <option value="scarborough">Scarborough</option>
+                                    <option value="agincourt">Agincourt</option>
+                                </optgroup>
+                                <optgroup label="West">
+                                    <option value="parkdale">Parkdale</option>
+                                    <option value="high-park">High Park</option>
+                                    <option value="junction">The Junction</option>
+                                    <option value="little-italy">Little Italy</option>
+                                    <option value="kensington">Kensington</option>
+                                    <option value="etobicoke">Etobicoke</option>
+                                </optgroup>
+                                <optgroup label="North">
+                                    <option value="willowdale">Willowdale</option>
+                                    <option value="jane-finch">Jane &amp; Finch</option>
+                                    <option value="downsview">Downsview</option>
+                                </optgroup>
+                                <optgroup label="Visiting">
+                                    <option value="gta">GTA</option>
+                                    <option value="ontario">Ontario</option>
+                                    <option value="canada">Canada</option>
+                                    <option value="international">International</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group"><label class="form-label"><i data-lucide="message-square"
+                                    class="label-icon"></i> Caption</label>
+                            <textarea id="story-caption" class="form-textarea"
+                                placeholder="What makes this moment special?" maxlength="280"></textarea>
+                            <span class="char-count"><span id="char-count">0</span>/280</span>
+                        </div>
+                        <div class="capture-nav-buttons">
+                            <button class="btn btn-secondary" onclick="goToCaptureStep(1)"><i
+                                    data-lucide="arrow-left"></i> Back</button>
+                            <button class="btn btn-primary" onclick="goToCaptureStep(3)"><i data-lucide="map-pin"></i>
+                                Pin It!</button>
+                        </div>
+                    </div>
+                    <div id="capture-step-3" class="capture-step">
+                        <div class="pin-success">
+                            <div class="pin-success-animation">
+                                <div class="pin-burst"></div>
+                                <div class="pin-icon-large"><i data-lucide="map-pin"></i></div>
+                            </div>
+                            <h2 class="pin-success-title">Pinned!</h2>
+                            <p class="pin-success-desc">Your story is on the Impact Map</p>
+                            <div class="pin-summary" id="pin-summary"></div>
+                            <div class="pin-actions">
+                                <button class="btn btn-primary" onclick="navigateTo('map')"><i data-lucide="map"></i>
+                                    View Map</button>
+                                <button class="btn btn-outline" onclick="shareStory()"><i data-lucide="share-2"></i>
+                                    Share</button>
+                                <button class="btn btn-secondary" onclick="resetCapture()"><i data-lucide="camera"></i>
+                                    Pin Another</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: MAP -->
+        <section id="page-map" class="page">
+            <div class="map-container">
+                <div class="map-header">
+                    <h1><i data-lucide="map" class="title-icon"></i> Glocal Impact Map</h1>
+                    <p>Every pin is a story. Every story is a legacy.</p>
+                    <div class="map-controls">
+                        <div class="map-legend">
+                            <span class="legend-item"><span class="legend-dot dot-photo"></span> Photo</span>
+                            <span class="legend-item"><span class="legend-dot dot-video"></span> Video</span>
+                            <span class="legend-item"><span class="legend-dot dot-new"></span> New</span>
+                        </div>
+                        <div class="map-filter-group">
+                            <button class="filter-btn active" data-filter="all"
+                                onclick="filterStories('all')">All</button>
+                            <button class="filter-btn" data-filter="photo" onclick="filterStories('photo')"><i
+                                    data-lucide="camera"></i></button>
+                            <button class="filter-btn" data-filter="video" onclick="filterStories('video')"><i
+                                    data-lucide="video"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-canvas-wrapper">
+                    <div id="impact-map" class="impact-map">
+                        <svg id="toronto-svg" viewBox="0 0 800 600" class="toronto-svg">
+                            <defs>
+                                <radialGradient id="pinGlow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.8" />
+                                    <stop offset="100%" stop-color="#00e5ff" stop-opacity="0" />
+                                </radialGradient>
+                                <radialGradient id="pinGlowNew" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#ffab00" stop-opacity="0.9" />
+                                    <stop offset="100%" stop-color="#ffab00" stop-opacity="0" />
+                                </radialGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <path d="M0,480 Q200,460 400,470 Q600,480 800,450 L800,600 L0,600 Z" fill="#0a1628"
+                                stroke="#0d4a6b" stroke-width="0.5" opacity="0.6" />
+                            <g class="roads" stroke="#1a2a4a" stroke-width="0.5" opacity="0.4">
+                                <line x1="0" y1="120" x2="800" y2="120" />
+                                <line x1="0" y1="240" x2="800" y2="240" />
+                                <line x1="100" y1="340" x2="700" y2="340" />
+                                <line x1="200" y1="420" x2="600" y2="420" />
+                                <line x1="400" y1="80" x2="400" y2="460" />
+                                <line x1="300" y1="100" x2="300" y2="460" />
+                                <line x1="500" y1="100" x2="500" y2="460" />
+                            </g>
+                            <g class="neighborhood-labels" fill="#2a4a7a" font-family="Outfit" font-size="9"
+                                font-weight="300" opacity="0.5">
+                                <text x="395" y="165" text-anchor="middle">North York</text><text x="200" y="165"
+                                    text-anchor="middle">Jane-Finch</text><text x="395" y="235"
+                                    text-anchor="middle">Midtown</text><text x="295" y="335"
+                                    text-anchor="middle">Annex</text><text x="500" y="335"
+                                    text-anchor="middle">Danforth</text><text x="350" y="375"
+                                    text-anchor="middle">Kensington</text><text x="160" y="415"
+                                    text-anchor="middle">Parkdale</text><text x="670" y="280"
+                                    text-anchor="middle">Scarborough</text><text x="395" y="415"
+                                    text-anchor="middle">Downtown</text><text x="310" y="448" text-anchor="middle"
+                                    fill="#ffab00" font-weight="600">Fort York</text>
+                            </g>
+                            <g class="fort-york-marker" transform="translate(310,455)">
+                                <circle r="20" fill="url(#pinGlowNew)" class="pulse-ring" />
+                                <circle r="5" fill="#ffab00" filter="url(#glow)" /><text y="-12" text-anchor="middle"
+                                    fill="#ffab00" font-family="Outfit" font-size="8" font-weight="600">FAN FEST</text>
+                            </g>
+                            <g id="pins-group"></g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="map-feed">
+                    <h3 class="feed-title"><i data-lucide="radio" class="feed-title-icon"></i> Live Feed</h3>
+                    <div class="feed-search"><i data-lucide="search" class="search-icon"></i><input type="text"
+                            id="feed-search-input" class="feed-search-input" placeholder="Search stories..."
+                            oninput="filterFeed()"></div>
+                    <div id="story-feed" class="story-feed"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: MY STORIES -->
+        <section id="page-mystories" class="page">
+            <div class="mystories-container">
+                <div class="page-header">
+                    <h1><i data-lucide="book-open" class="title-icon"></i> My Stories</h1>
+                    <p>Manage your pinned Glocal moments</p>
+                </div>
+                <div id="mystories-list" class="mystories-list"></div>
+                <div id="mystories-empty" class="empty-state hidden">
+                    <i data-lucide="image" class="empty-icon"></i>
+                    <h3>No Stories Yet</h3>
+                    <p>Pin your first Glocal moment!</p>
+                    <button class="btn btn-primary" onclick="navigateTo('capture')"><i data-lucide="camera"></i> Pin a
+                        Story</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: LEGACY -->
+        <section id="page-legacy" class="page">
+            <div class="legacy-container">
+                <div class="page-header">
+                    <h1><i data-lucide="store" class="title-icon"></i> Social Procurement Legacy</h1>
+                    <p>Local businesses building a lasting 2026 legacy</p>
+                </div>
+                <div class="legacy-stats-bar">
+                    <div class="ls-stat"><span class="ls-number" data-target="150">0</span><span class="ls-label"><i
+                                data-lucide="users" class="ls-icon"></i> Vendors</span></div>
+                    <div class="ls-stat"><span class="ls-number" data-target="8.2" data-prefix="$"
+                            data-suffix="M">$0M</span><span class="ls-label"><i data-lucide="trending-up"
+                                class="ls-icon"></i> Invested</span></div>
+                    <div class="ls-stat"><span class="ls-number" data-target="42" data-suffix="%">0%</span><span
+                            class="ls-label"><i data-lucide="heart" class="ls-icon"></i> Equity</span></div>
+                </div>
+                <div class="vendor-grid" id="vendor-grid"></div>
+            </div>
+        </section>
+
+        <!-- PAGE: SOCCER -->
+        <section id="page-soccer" class="page">
+            <div class="soccer-container">
+                <div class="page-header">
+                    <h1><svg class="custom-icon title-icon" width="28" height="28">
+                            <use href="#icon-soccer" />
+                        </svg> Soccer for All</h1>
+                    <p>Free mini-pitches for every community</p>
+                </div>
+                <div class="soccer-hero-stat">
+                    <div class="shs-ring"><svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="52" fill="none" stroke="#1a2a4a" stroke-width="8" />
+                            <circle cx="60" cy="60" r="52" fill="none" stroke="url(#splashGrad)" stroke-width="8"
+                                stroke-dasharray="260 67" stroke-linecap="round" class="ring-animate" />
+                        </svg><span class="shs-number">26</span></div>
+                    <p class="shs-label">Mini-Pitches Funded</p>
+                </div>
+                <div class="pitch-search"><i data-lucide="search" class="search-icon"></i><input type="text"
+                        id="pitch-search-input" class="pitch-search-input" placeholder="Search pitches..."
+                        oninput="filterPitches()"></div>
+                <div class="pitch-list" id="pitch-list"></div>
+            </div>
+        </section>
+
+        <!-- PAGE: ADMIN -->
+        <section id="page-admin" class="page">
+            <div class="admin-container">
+                <div class="page-header">
+                    <h1><i data-lucide="shield" class="title-icon"></i> Admin Panel</h1>
+                    <p>Manage users, stories, and platform</p>
+                </div>
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="switchAdminTab('users')"><i data-lucide="users"></i>
+                        Users</button>
+                    <button class="admin-tab" onclick="switchAdminTab('stories')"><i data-lucide="book-open"></i>
+                        Stories</button>
+                    <button class="admin-tab" onclick="switchAdminTab('stats')"><i data-lucide="bar-chart-3"></i>
+                        Stats</button>
+                </div>
+                <div id="admin-tab-users" class="admin-tab-content active">
+                    <div id="admin-users-list"></div>
+                </div>
+                <div id="admin-tab-stories" class="admin-tab-content">
+                    <div id="admin-stories-list"></div>
+                </div>
+                <div id="admin-tab-stats" class="admin-tab-content">
+                    <div id="admin-stats"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-brand"><svg class="custom-icon" width="24" height="24">
+                        <use href="#icon-soccer" />
+                    </svg><span>Scaling the Soul</span></div>
+                <p class="footer-tagline">FIFA Fan Festival Toronto 2026 — Fort York &amp; The Bentway</p>
+                <p class="footer-copy">&copy; 2026 FIFA Fan Festival Toronto</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-backdrop" onclick="closeAuthModal()"></div>
+        <div class="modal-content auth-modal-content">
+            <button class="modal-close" onclick="closeAuthModal()"><i data-lucide="x"></i></button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" data-tab="signup" onclick="switchAuthTab('signup')">Sign Up</button>
+                <button class="auth-tab" data-tab="forgot" onclick="switchAuthTab('forgot')">Forgot</button>
+            </div>
+            <div id="auth-login" class="auth-form active">
+                <div class="form-group"><label class="form-label"><i data-lucide="mail" class="label-icon"></i>
+                        Email</label><input type="email" id="login-email" class="form-input"
+                        placeholder="you@example.com"></div>
+                <div class="form-group"><label class="form-label"><i data-lucide="lock" class="label-icon"></i>
+                        Password</label><input type="password" id="login-password" class="form-input"
+                        placeholder="Your password"></div>
+                <div class="form-row"><label class="form-checkbox"><input type="checkbox" id="login-remember"> Remember
+                        me</label><a class="form-link" onclick="switchAuthTab('forgot')">Forgot password?</a></div>
+                <button class="btn btn-primary btn-full" id="btn-login" onclick="handleLogin()"><i
+                        data-lucide="log-in"></i> Login</button>
+                <p class="auth-switch">No account? <a onclick="switchAuthTab('signup')">Sign up</a></p>
+            </div>
+            <div id="auth-signup" class="auth-form">
+                <div class="form-group"><label class="form-label"><i data-lucide="user" class="label-icon"></i> Full
+                        Name</label><input type="text" id="signup-name" class="form-input" placeholder="Your name">
+                </div>
+                <div class="form-group"><label class="form-label"><i data-lucide="mail" class="label-icon"></i>
+                        Email</label><input type="email" id="signup-email" class="form-input"
+                        placeholder="you@example.com"></div>
+                <div class="form-group"><label class="form-label"><i data-lucide="map-pin" class="label-icon"></i>
+                        Neighborhood</label>
+                    <select id="signup-neighborhood" class="form-select">
+                        <option value="">-- Select --</option>
+                        <option value="fort-york">Fort York</option>
+                        <option value="harbourfront">Harbourfront</option>
+                        <option value="king-west">King West</option>
+                        <option value="danforth">Danforth</option>
+                        <option value="scarborough">Scarborough</option>
+                        <option value="parkdale">Parkdale</option>
+                        <option value="kensington">Kensington</option>
+                        <option value="jane-finch">Jane & Finch</option>
+                        <option value="midtown">Midtown</option>
+                        <option value="north-york">North York</option>
+                        <option value="little-italy">Little Italy</option>
+                        <option value="international">International</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label"><i data-lucide="lock" class="label-icon"></i>
+                        Password</label><input type="password" id="signup-password" class="form-input"
+                        placeholder="Min 6 characters"></div>
+                <div class="form-group"><label class="form-label"><i data-lucide="lock" class="label-icon"></i>
+                        Confirm</label><input type="password" id="signup-confirm" class="form-input"
+                        placeholder="Re-enter password"></div>
+                <button class="btn btn-primary btn-full" id="btn-signup" onclick="handleSignup()"><i
+                        data-lucide="user-plus"></i> Create Account</button>
+                <p class="auth-switch">Have an account? <a onclick="switchAuthTab('login')">Login</a></p>
+            </div>
+            <div id="auth-forgot" class="auth-form">
+                <p class="auth-desc"><i data-lucide="mail"></i> Enter your email for a password reset link.</p>
+                <div class="form-group"><label class="form-label"><i data-lucide="mail" class="label-icon"></i>
+                        Email</label><input type="email" id="forgot-email" class="form-input"
+                        placeholder="you@example.com"></div>
+                <button class="btn btn-primary btn-full" onclick="handleForgotPassword()"><i data-lucide="send"></i>
+                    Send Reset Link</button>
+                <p class="auth-switch">Remember? <a onclick="switchAuthTab('login')">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div id="profile-modal" class="modal-overlay hidden">
+        <div class="modal-backdrop" onclick="closeProfileModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeProfileModal()"><i data-lucide="x"></i></button>
+            <h2 class="modal-title"><i data-lucide="user" class="title-icon"></i> Edit Profile</h2>
+            <div class="form-group"><label class="form-label">Name</label><input type="text" id="profile-name"
+                    class="form-input"></div>
+            <div class="form-group"><label class="form-label">Neighborhood</label>
+                <select id="profile-neighborhood" class="form-select">
+                    <option value="">-- Select --</option>
+                    <option value="fort-york">Fort York</option>
+                    <option value="harbourfront">Harbourfront</option>
+                    <option value="danforth">Danforth</option>
+                    <option value="scarborough">Scarborough</option>
+                    <option value="parkdale">Parkdale</option>
+                    <option value="kensington">Kensington</option>
+                    <option value="jane-finch">Jane & Finch</option>
+                    <option value="midtown">Midtown</option>
+                    <option value="north-york">North York</option>
+                </select>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="saveProfile()"><i data-lucide="save"></i> Save</button>
+        </div>
+    </div>
+
+    <!-- CHANGE PASSWORD MODAL -->
+    <div id="password-modal" class="modal-overlay hidden">
+        <div class="modal-backdrop" onclick="closePasswordModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePasswordModal()"><i data-lucide="x"></i></button>
+            <h2 class="modal-title"><i data-lucide="key" class="title-icon"></i> Change Password</h2>
+            <div class="form-group"><label class="form-label">New Password</label><input type="password" id="pw-new"
+                    class="form-input" placeholder="Min 6 characters"></div>
+            <div class="form-group"><label class="form-label">Confirm</label><input type="password" id="pw-confirm"
+                    class="form-input" placeholder="Re-enter"></div>
+            <button class="btn btn-primary btn-full" onclick="handleChangePassword()"><i data-lucide="save"></i> Update
+                Password</button>
+        </div>
+    </div>
+
+    <!-- EDIT STORY MODAL -->
+    <div id="edit-story-modal" class="modal-overlay hidden">
+        <div class="modal-backdrop" onclick="closeEditStoryModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeEditStoryModal()"><i data-lucide="x"></i></button>
+            <h2 class="modal-title"><i data-lucide="edit-3" class="title-icon"></i> Edit Story</h2>
+            <input type="hidden" id="edit-story-id">
+            <div class="form-group"><label class="form-label">Neighborhood</label>
+                <select id="edit-neighborhood" class="form-select">
+                    <option value="fort-york">Fort York</option>
+                    <option value="harbourfront">Harbourfront</option>
+                    <option value="danforth">Danforth</option>
+                    <option value="scarborough">Scarborough</option>
+                    <option value="parkdale">Parkdale</option>
+                    <option value="kensington">Kensington</option>
+                    <option value="jane-finch">Jane & Finch</option>
+                    <option value="midtown">Midtown</option>
+                    <option value="north-york">North York</option>
+                    <option value="little-italy">Little Italy</option>
+                    <option value="international">International</option>
+                </select>
+            </div>
+            <div class="form-group"><label class="form-label">Caption</label><textarea id="edit-caption"
+                    class="form-textarea" maxlength="280"></textarea></div>
+            <button class="btn btn-primary btn-full" onclick="saveEditStory()"><i data-lucide="save"></i> Save</button>
+        </div>
+    </div>
+
+    <!-- PIN DETAIL MODAL -->
+    <div id="pin-modal" class="modal-overlay hidden">
+        <div class="modal-backdrop" onclick="closePinModal()"></div>
+        <div class="modal-content"><button class="modal-close" onclick="closePinModal()"><i
+                    data-lucide="x"></i></button>
+            <div id="pin-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- VENDOR DETAIL MODAL -->
+    <div id="vendor-modal" class="modal-overlay hidden">
+        <div class="modal-backdrop" onclick="closeVendorModal()"></div>
+        <div class="modal-content"><button class="modal-close" onclick="closeVendorModal()"><i
+                    data-lucide="x"></i></button>
+            <div id="vendor-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- CONFIRM DIALOG -->
+    <div id="confirm-dialog" class="modal-overlay hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content confirm-content">
+            <div class="confirm-icon"><i data-lucide="alert-triangle"></i></div>
+            <h3 id="confirm-title">Are you sure?</h3>
+            <p id="confirm-message">This cannot be undone.</p>
+            <div class="confirm-btns">
+                <button class="btn btn-secondary" onclick="closeConfirm()">Cancel</button>
+                <button class="btn btn-danger" onclick="confirmAction()"><i data-lucide="trash-2"></i> Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Firebase SDK (compat for browser) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="lucide.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
